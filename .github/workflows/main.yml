@@ -1,0 +1,36 @@
+name: Deploy T-shop Infra with Bicep
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "infra/**"
+
+env:
+  RESOURCE_GROUP: Ecommerce-RG
+  LOCATION: southafricanorth
+
+jobs:
+  deploy-infra:
+    name: Deploy Infra to Azure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Bicep Template
+        uses: azure/arm-deploy@v1
+        with:
+          scope: resourcegroup
+          subscriptionId: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
+          resourceGroupName: ${{ env.RESOURCE_GROUP }}
+          template: ./infra/main.bicep
+          parameters: ./infra/parameters.json
+          deploymentName: tshop-deployment-${{ github.run_number }}
