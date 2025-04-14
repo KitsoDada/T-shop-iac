@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "value": "aksTshopCluster"
+    },
+    "dnsPrefix": {
+      "value": "aks-tshop"
+    },
+    "osDiskSizeGB": {
+      "value": 30
+    },
+    "agentCount": {
+      "value": 2
+    },
+    "agentVMSize": {
+      "value": "Standard_B2s"
+    },
+    "linuxAdminUsername": {
+      "value": "azureuser"
+    },
+    "sshRSAPublicKey": {
+      "value": "bBB0hGP2K3sB/HGjprXv1t47v1RcqgunewohBbVS/Nc"
+    },
+    "dbHost": {
+      "value": "sql-server96.database.windows.net"
+    },
+    "dbUser": {
+      "value": "sqladmin"
+    },
+    "dbPassword": {
+      "value": "74551162da.."
+    },
+    "dbName": {
+      "value": "ecommerce-db"
+    },
+    "dbPort": {
+      "value": "1433"
+    },
+    "dbConnection": {
+      "value": "Server=sql-server96.database.windows.net;Database=ecommerce-db;User Id=sqladmin;Password=74551162da..;"
+    },
+    "acrName": {
+      "value": "tshopacr1234"
+    },
+    "appGatewayName": {
+      "value": "tshop-app-gateway"
+    },
+    "appServicePlanName": {
+      "value": "tshop-app-service-plan"
+    },
+    "webAppName": {
+      "value": "tshop-webapp1234"
+    },
+    "containerImage": {
+      "value": "tshop-product-service:latest"
+    },
+    "aksServicePrincipalClientId": {
+      "value": "4704213d-33b5-469d-84c5-72ea35c21bcc"
+    },
+    "vnetName": {
+      "value": "tshop-vnet"
+    },
+    "publicSubnetName": {
+      "value": "tshop-public-subnet"
+    },
+    "privateSubnetName": {
+      "value": "tshop-private-subnet"
+    }
+  }
+}
