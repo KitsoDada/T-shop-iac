@@ -8,28 +8,30 @@ on:
       - "infra/**"
 
 env:
-  RESOURCE_GROUP: Ecommerce-RG
-  LOCATION: southafricanorth
+  RESOURCE_GROUP: Online-cornerRG
+  LOCATION: eastus
 
 jobs:
   deploy-infra:
     name: Deploy Infra to Azure
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # must be on an Azure VM or App with the UAMI assigned
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Login to Azure
+      - name: Login to Azure using UAMI
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.MANAGED_IDENTITY_CLIENT_ID }}
+          enable-managed-identity: true
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Deploy Bicep Template
         uses: azure/arm-deploy@v1
         with:
           scope: resourcegroup
-          subscriptionId: ${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.RESOURCE_GROUP }}
           template: ./infra/main.bicep
           parameters: ./infra/parameters.json
